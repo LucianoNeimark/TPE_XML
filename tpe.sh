@@ -8,3 +8,4 @@ curl -o artist_info.xml https://musicbrainz.org/ws/2/artist/${ID_ARTIST}?inc=wor
 curl -o recordings_info.xml https://musicbrainz.org/ws/2/recording?query=arid:${ID_ARTIST}&limit=1000
 fi
 
+xquery wtf artist_data.xml artist_info recordings_info

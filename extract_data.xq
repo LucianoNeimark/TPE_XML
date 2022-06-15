@@ -31,7 +31,6 @@
                         <date>{data($release/date)}</date>
                         <country>{data($release/country)}</country>
                         <type>{data($release/release-group/primary-type)}</type>
-                      
                         <track-number>{data($release/medium-list/medium/track-list/track/number)}</track-number>
                     </release>
             }
