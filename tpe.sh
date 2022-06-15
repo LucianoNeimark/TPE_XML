@@ -1,3 +1,4 @@
+#!/bin/bash
 ID_ARTIST=$1
 #VALIDAR QUE ESTE EL ID
 #curl para obtener los archivos artist_info.xml y recordings_info.xml, con esto generamos el nuevo xml
@@ -7,5 +8,7 @@ then
 curl -o artist_info.xml https://musicbrainz.org/ws/2/artist/${ID_ARTIST}?inc=works
 curl -o recordings_info.xml https://musicbrainz.org/ws/2/recording?query=arid:${ID_ARTIST}&limit=1000
 fi
+sed -i .bak 's> xmlns="http://musicbrainz.org/ns/mmd-2.0#">>g' artist_info.xml
+sed -i .bak 's> xmlns="http://musicbrainz.org/ns/mmd-2.0#">>g' recordings_info.xml
 
-xquery wtf artist_data.xml artist_info recordings_info
+java net.sf.saxon.Query extract_data.xq > pruebitash.xml 
