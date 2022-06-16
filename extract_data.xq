@@ -25,6 +25,7 @@
             
             {
                 for $release in $recording/release-list/release
+                order by $recording/date descending
                 return 
                     <release>
                         <title>{data($release/title)}</title>
