@@ -51,7 +51,7 @@ type="recordingT"/>
          <xsd:element name="date" type="xsd:string"/>
          <xsd:element name="country" minOccurs="0" type="xsd:string"/>
          <xsd:element name="type" type="xsd:string"/>
-         <xsd:element name="subtype" minOccurs="0" type="xsd:boolean"/>
+         <xsd:element name="subtype" minOccurs="0" type="xsd:string"/>
          <xsd:element name="track-number" minOccurs="0" type="xsd:string" />
      </xsd:sequence>
  </xsd:complexType>

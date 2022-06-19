@@ -2,7 +2,10 @@
 <artist>
     
     {doc('artist_info.xml')//artist/name}
-    {doc('artist_info.xml')//artist/disambiguation }
+
+    <disambiguation>{
+        data(doc('artist_info.xml')//artist/disambiguation)
+    }</disambiguation>
 
     <type>{
         data(doc('artist_info.xml')//artist/@type)
@@ -32,6 +35,7 @@
                         <date>{data($release/date)}</date>
                         <country>{data($release/country)}</country>
                         <type>{data($release/release-group/primary-type)}</type>
+                        <subtype>{data(($release/release-group/secondary-type-list/secondary-type)[1])}</subtype> 
                         <track-number>{data($release/medium-list/medium/track-list/track/number)}</track-number>
                     </release>
             }
