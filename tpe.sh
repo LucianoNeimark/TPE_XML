@@ -12,6 +12,9 @@ sleep 2 # Parche porque intenta usar el file antes de crearlo. Cambiar!!!
 
 sed -i .bak 's> xmlns="http://musicbrainz.org/ns/mmd-2.0#">>' artist_info.xml
 sed -i .bak 's> xmlns="http://musicbrainz.org/ns/mmd-2.0#">>' recordings_info.xml
-java net.sf.saxon.Query extract_data.xq > pruebitash.xml  
+java net.sf.saxon.Query extract_data.xq > artist_data.xml  
+java net.sf.saxon.Transform -s:artist_data.xml -xsl:generate_doc.xsl > artist_page.adoc
+sed -i .bak 's#<?xml version="1.0" encoding="UTF-8"?>##'  artist_page.adoc
+
 fi
 #else lanzar el error -> se tiene una crear un .adoc donde la pagina solo tiene un error
