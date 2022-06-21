@@ -5,19 +5,14 @@ ID_ARTIST=$1
 EXISTANT_ID=$(xpath -q -e "boolean(//artist[@arid = '${ID_ARTIST}'])" artists_list.xml)
 if [ $EXISTANT_ID == "1" ] ;
 then 
-curl -o artist_info.xml https://musicbrainz.org/ws/2/artist/${ID_ARTIST}?inc=works
-curl -o recordings_info.xml https://musicbrainz.org/ws/2/recording?query=arid:${ID_ARTIST}&limit=1000
-
-sleep 2 # Parche porque intenta usar el file antes de crearlo. Cambiar!!!
-
-sed -i .bak 's> xmlns="http://musicbrainz.org/ns/mmd-2.0#">>' artist_info.xml
-sed -i .bak 's> xmlns="http://musicbrainz.org/ns/mmd-2.0#">>' recordings_info.xml
+curl -o artist_info.xml https://musicbrainz.org/ws/2/artist/${ID_ARTIST}?inc=works && curl -o recordings_info.xml https://musicbrainz.org/ws/2/recording?query=arid:${ID_ARTIST}&limit=1000 && sleep 6
+sed -i .bak 's>xmlns="http://musicbrainz.org/ns/mmd-2.0#">>' artist_info.xml
+sed -i .bak 's>xmlns="http://musicbrainz.org/ns/mmd-2.0#">>' recordings_info.xml
 java net.sf.saxon.Query extract_data.xq > artist_data.xml  
 java net.sf.saxon.Transform -s:artist_data.xml -xsl:generate_doc.xsl > artist_page.adoc
 sed -i .bak 's#<?xml version="1.0" encoding="UTF-8"?>##'  artist_page.adoc
 else
-# Codigo de crear el adoc de error
-touch artist_page.adoc
-echo '= ID not found in Artist List' >> artist_page.adoc
+    # Codigo de crear el adoc de error
+    touch artist_page.adoc
+    echo '= ID not found in Artist List' > artist_page.adoc
 fi
-#else lanzar el error -> se tiene una crear un .adoc donde la pagina solo tiene un error
