@@ -16,8 +16,13 @@
         <origin>{data(doc('artist_info.xml')//artist/begin-area/name)}</origin>
     </area>
 
-    {doc('artist_info.xml')//artist/life-span}
-
+    <life-span>
+    <begin>{data(doc('artist_info.xml')//artist/life-span/begin)}</begin>
+    <end>{data(doc('artist_info.xml')//artist/life-span/end)}</end>
+    <ended>{
+        if(exists(doc('artist_info.xml')//artist/life-span/ended/text())) then  data(doc('artist_info.xml')//artist/life-span/ended) else "false"    
+    }</ended>
+    </life-span>
     <recordings>
         {
          for $recording in doc('recordings_info.xml')//recording-list/recording

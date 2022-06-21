@@ -1,30 +1,30 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:template match="//artist_data">
-= <xsl:value-of select="data(./artist/name)"/>
+<xsl:template match="//artist_data/artist">
+= <xsl:value-of select="data(./name)"/>
 <xsl:text>
     
 </xsl:text>
         
         <xsl:apply-templates/>
         <xsl:call-template name="disambugation-bullet">
-            <xsl:with-param name="disambiguation" select="./artist/disambiguation" />
+            <xsl:with-param name="disambiguation" select="./disambiguation" />
         </xsl:call-template>
 
         <xsl:call-template name="type">
-            <xsl:with-param name="type" select="./artist/type" />
+            <xsl:with-param name="type" select="./type" />
         </xsl:call-template>
 
         <xsl:call-template name="birth-place-bullet">
-            <xsl:with-param name="area" select="./artist/area" />
+            <xsl:with-param name="area" select="./area" />
         </xsl:call-template>
 
         <xsl:call-template name="life-span-bullet">
-            <xsl:with-param name="life-span" select="./artist/life-span" />
+            <xsl:with-param name="life-span" select="./life-span" />
         </xsl:call-template>
 
 === Recordings
-        <xsl:for-each select="./artist/recordings/recording">
+        <xsl:for-each select="./recordings/recording">
         <xsl:call-template name="recording">
             <xsl:with-param name="recording" select="." />
         </xsl:call-template>
@@ -40,9 +40,8 @@
 
 <xsl:template name ="disambugation-bullet">
     <xsl:param name="disambiguation"/>
-    <xsl:if test="boolean(./text())">
+    <xsl:if test="data($disambiguation)">
 * Disambiguation:  <xsl:value-of select="data($disambiguation)"/>
-        
     </xsl:if>
 </xsl:template> 
 
@@ -68,12 +67,13 @@
     </xsl:if>
     
 </xsl:template> 
-<xsl:template match="//artist"/>
 <xsl:template match="//artist/name"/>
 <xsl:template match="//artist/area"/>
 <xsl:template match="//artist/life-span"/>
 <xsl:template match="//artist/recordings"/>
-<xsl:template match="//artist/birth-place"/>
+<xsl:template match="//artist/type"/>
+<xsl:template match="//artist/disambiguation"/>
+
 
 
 
@@ -105,5 +105,7 @@
     <xsl:param name="release"/>
 |<xsl:value-of select="data($release/title)"/>| <xsl:value-of select="data($release/date)"/> | <xsl:value-of select="data($release/country)"/>| <xsl:value-of select="data($release/type)"/>|  <xsl:value-of select="data($release/track-number)"/>
 </xsl:template> 
-
+<xsl:template match="//error">
+= <xsl:value-of select="data(.)"/>
+</xsl:template>
 </xsl:stylesheet>
